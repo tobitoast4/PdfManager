@@ -110,7 +110,7 @@ class MainWindow(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    qdarktheme.setup_theme("light")
+    qdarktheme.setup_theme("dark")
     # print(QtWidgets.QStyleFactory.keys())
     # app.setStyle('Fusion')
     wnd = MainWindow()

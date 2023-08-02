@@ -72,8 +72,19 @@ def rotate_pdf(input_path, output_path, rotation_degrees, selected_pages):
             if selected_pages is None or page in selected_pages_list:   # if selected_pages is None -> all pages should
                 writer.pages[page].rotate(rotation_degrees)             # be rotated; or if page in in the list of the
                                                                         # ones to be rotated
-        with open(output_path, "wb") as fp:
-            writer.write(fp)
+        new_file = Path(output_path)
+        if new_file.is_file():
+            override_existing_file = show_dialog("Override file",
+                                                 f"File {output_path} already exists. Do you want to override it?",
+                                                 QMessageBox.Question, show_two_buttons=True)
+            if override_existing_file:
+                with open(output_path, "wb") as fp:
+                    writer.write(fp)
+                show_dialog("Success", f"New PDF created: {output_path}", QMessageBox.Information)
+        else:
+            with open(output_path, "wb") as fp:
+                writer.write(fp)
+            show_dialog("Success", f"New PDF created: {output_path}", QMessageBox.Information)
     except Exception as e:
         show_dialog("Error", str(e), QMessageBox.Critical)
     finally:
