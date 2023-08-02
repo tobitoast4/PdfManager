@@ -141,7 +141,7 @@
         <string>Split</string>
        </attribute>
       </widget>
-      <widget class="QWidget" name="tab_6">
+      <widget class="QWidget" name="tab_rotate">
        <attribute name="title">
         <string>Rotate</string>
        </attribute>
@@ -172,7 +172,7 @@
             <widget class="QLineEdit" name="lineEdit_3"/>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_2">
+            <widget class="QPushButton" name="rotate_pushButton_browse_input_path">
              <property name="maximumSize">
               <size>
                <width>30</width>
