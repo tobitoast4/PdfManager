@@ -169,7 +169,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_3"/>
+            <widget class="QLineEdit" name="rotate_lineEdit_input"/>
            </item>
            <item>
             <widget class="QPushButton" name="rotate_pushButton_browse_input_path">
@@ -310,7 +310,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QCheckBox" name="checkBox_2">
+                  <widget class="QCheckBox" name="rotate_checkBox_select_pages">
                    <property name="text">
                     <string>Rotate all pages</string>
                    </property>
@@ -323,7 +323,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QWidget" name="widget_7" native="true">
+               <widget class="QWidget" name="rotate_widget_select_pages" native="true">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -357,7 +357,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit_4">
+                  <widget class="QLineEdit" name="rotate_lineEdit_selected_pages">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -432,7 +432,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_merge_3">
+         <widget class="QPushButton" name="pushButton_rotate">
           <property name="minimumSize">
            <size>
             <width>0</width>
