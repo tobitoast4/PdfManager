@@ -1,8 +1,7 @@
-from datetime import datetime
-
 import sys, os
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import *
+import qdarktheme
 
 from pypdf import PdfMerger
 from pathlib import Path
@@ -217,7 +216,10 @@ def show_dialog(title, description, type, show_two_buttons=False):
 
 
 if __name__ == '__main__':
+    print(QtWidgets.QStyleFactory.keys())
     app = QApplication(sys.argv)
+    qdarktheme.setup_theme("dark")
+    # app.setStyle('Fusion')
     wnd = MainWindow()
     wnd.show()
     sys.exit(app.exec_())
