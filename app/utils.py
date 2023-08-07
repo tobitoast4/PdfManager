@@ -1,6 +1,22 @@
 from PyQt5.QtWidgets import QMessageBox, QPushButton
 from pypdf import PdfMerger, PdfWriter, PdfReader
 from pathlib import Path
+import json
+
+WINDOW_STYLE_KEY = "window_style"
+
+def write_settings(json_data):
+    json_object = json.dumps(json_data, indent=4)
+    with open("settings.json", "w") as outfile:
+        outfile.write(json_object)
+
+
+def read_settings():
+    try:
+        with open('settings.json', 'r') as openfile:
+            return json.load(openfile)
+    except FileNotFoundError:
+        return None
 
 
 class QButton(QPushButton):
@@ -40,7 +56,17 @@ def merge_pdfs(pdf_list, output_path):
         for pdf in pdf_list:
             merger.append(pdf)
 
-        save_output_file(merger, output_path)
+        new_file = Path(output_path)
+        if new_file.is_file():
+            override_existing_file = show_dialog("Override file",
+                                                 f"File {output_path} already exists. Do you want to override it?",
+                                                 QMessageBox.Question, show_two_buttons=True)
+            if override_existing_file:
+                merger.write(output_path)
+                show_dialog("Success", f"New PDF created: {output_path}", QMessageBox.Information)
+        else:
+            merger.write(output_path)
+            show_dialog("Success", f"New PDF created: {output_path}", QMessageBox.Information)
     except Exception as e:
         show_dialog("Error", str(e), QMessageBox.Critical)
     finally:

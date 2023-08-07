@@ -1,22 +1,28 @@
 import sys, os
 from PyQt5 import QtWidgets, uic, QtCore
 from PyQt5.QtWidgets import *
-import qdarktheme
 
 from tab_merge import *
+from settings import SettingsWindow, change_window_style
 
 output_path = os.path.join(os.path.expanduser("~"), "Documents", "result.pdf")
+app = QApplication(sys.argv)
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
-        super().__init__()  # Call the inherited classes __init__ method
+        super().__init__()
         uic.loadUi('main_window.ui', self)  # Load the .ui file
-        self.setWindowTitle("PDF Manager")
 
         self.layout = self.findChild(QVBoxLayout, "verticalLayout_main")
         self.scroll = QScrollArea()
         self.merge_list_widget = MergeList(self)
+
+        button_settings = self.findChild(QPushButton, "pushButton_settings")
+        pixmap = getattr(QStyle, "SP_MessageBoxQuestion")
+        icon = self.style().standardIcon(pixmap)
+        button_settings.setIcon(icon)
+        button_settings.clicked.connect(self.show_settings)
 
         # merge tab
         self.button_add_documents = self.findChild(QPushButton, "pushButton_add")
@@ -126,12 +132,15 @@ class MainWindow(QMainWindow):
             selected_pages = lineEdit_selected_pages.text()
         rotate_pdf(input_path, output_path, rotation_degrees, selected_pages)
 
+    def show_settings(self):
+            self.settings_wnd = SettingsWindow(app)
+            self.settings_wnd.show()
+
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    # qdarktheme.setup_theme("light")
-    # print(QtWidgets.QStyleFactory.keys())
-    # app.setStyle('Fusion')
+    settings = read_settings()
+    if settings is not None:
+        change_window_style(app, settings[WINDOW_STYLE_KEY])
     wnd = MainWindow()
     wnd.show()
     sys.exit(app.exec_())
