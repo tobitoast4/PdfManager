@@ -30,11 +30,21 @@ class MainWindow(QMainWindow):
         self.scroll.setWidgetResizable(True)
         self.layout.addWidget(self.scroll)
 
+        # split tab
+        line_edit_output_path = self.findChild(QLineEdit, "split_lineEdit_output")
+        line_edit_output_path.setText(output_path)
+        split_button_input_path = self.findChild(QPushButton, "split_pushButton_browse_input_path")
+        split_button_input_path.clicked.connect(lambda: self.browse_path_input("split"))
+        split_button_output_path = self.findChild(QPushButton, "split_pushButton_browse_output_path")
+        split_button_output_path.clicked.connect(lambda: self.browse_path_output("split"))
+        button_split = self.findChild(QPushButton, "pushButton_split")
+        button_split.clicked.connect(self.split_pdf)
+
         # rotate tab
         rotate_button_input_path = self.findChild(QPushButton, "rotate_pushButton_browse_input_path")
         rotate_button_input_path.clicked.connect(lambda: self.browse_path_input("rotate"))
-        self.line_edit_output_path = self.findChild(QLineEdit, "rotate_lineEdit_output")
-        self.line_edit_output_path.setText(output_path)
+        self.line_edit_output_path_rotate = self.findChild(QLineEdit, "rotate_lineEdit_output")
+        self.line_edit_output_path_rotate.setText(output_path)
         rotate_button_output_path = self.findChild(QPushButton, "rotate_pushButton_browse_output_path")
         rotate_button_output_path.clicked.connect(lambda: self.browse_path_output("rotate"))
         self.widget_select_pages = self.findChild(QWidget, "rotate_widget_select_pages")
@@ -96,10 +106,19 @@ class MainWindow(QMainWindow):
         else:
             self.widget_select_pages.setVisible(True)
 
+    def split_pdf(self):
+        line_edit_input_path = self.findChild(QLineEdit, "split_lineEdit_input")
+        line_edit_output_path = self.findChild(QLineEdit, "split_lineEdit_output")
+        line_edit_selected_pages = self.findChild(QLineEdit, "split_lineEdit_selected_pages")
+        split_input_path = line_edit_input_path.text()
+        split_output_path = line_edit_output_path.text()
+        selected_pages = line_edit_selected_pages.text()
+        split_pdf(split_input_path, split_output_path, selected_pages)
+
     def rotate_pdf(self):
         line_edit_input_path = self.findChild(QLineEdit, "rotate_lineEdit_input")
         input_path = line_edit_input_path.text()
-        output_path = self.line_edit_output_path.text()
+        output_path = self.line_edit_output_path_rotate.text()
         rotation_degrees = self.rotate_comboBox_degrees.currentText()
         selected_pages = None
         if not self.checkBox_select_pages.isChecked():
@@ -110,7 +129,7 @@ class MainWindow(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    qdarktheme.setup_theme("dark")
+    # qdarktheme.setup_theme("light")
     # print(QtWidgets.QStyleFactory.keys())
     # app.setStyle('Fusion')
     wnd = MainWindow()

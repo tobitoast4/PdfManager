@@ -40,51 +40,42 @@ def merge_pdfs(pdf_list, output_path):
         for pdf in pdf_list:
             merger.append(pdf)
 
-        new_file = Path(output_path)
-        if new_file.is_file():
-            override_existing_file = show_dialog("Override file",
-                                                 f"File {output_path} already exists. Do you want to override it?",
-                                                 QMessageBox.Question, show_two_buttons=True)
-            if override_existing_file:
-                merger.write(output_path)
-                show_dialog("Success", f"New PDF created: {output_path}", QMessageBox.Information)
-        else:
-            merger.write(output_path)
-            show_dialog("Success", f"New PDF created: {output_path}", QMessageBox.Information)
+        save_output_file(merger, output_path)
     except Exception as e:
         show_dialog("Error", str(e), QMessageBox.Critical)
     finally:
         merger.close()
 
 
+def split_pdf(input_path, output_path, selected_pages):
+    writer = PdfWriter()
+    try:
+        reader = PdfReader(input_path)
+        selected_pages_list = get_page_list_from_selected_pages(selected_pages)
+        print(selected_pages_list)
+        for page in range(len(reader.pages)):
+            if page in selected_pages_list:
+                writer.add_page(reader.pages[page])
+        print(writer.pages)
+
+        save_output_file(writer, output_path)
+    except Exception as e:
+        show_dialog("Error", str(e), QMessageBox.Critical)
+
+
 def rotate_pdf(input_path, output_path, rotation_degrees, selected_pages):
-    print(input_path, output_path, rotation_degrees, selected_pages)
     writer = PdfWriter()
     try:
         reader = PdfReader(input_path)
         rotation_degrees = int(str(rotation_degrees)[:-1])
 
         selected_pages_list = get_page_list_from_selected_pages(selected_pages)
-        print(selected_pages_list)
 
         for page in range(len(reader.pages)):
-            writer.add_page(reader.pages[page])
             if selected_pages is None or page in selected_pages_list:   # if selected_pages is None -> all pages should
-                writer.pages[page].rotate(rotation_degrees)             # be rotated; or if page in in the list of the
-                                                                        # ones to be rotated
-        new_file = Path(output_path)
-        if new_file.is_file():
-            override_existing_file = show_dialog("Override file",
-                                                 f"File {output_path} already exists. Do you want to override it?",
-                                                 QMessageBox.Question, show_two_buttons=True)
-            if override_existing_file:
-                with open(output_path, "wb") as fp:
-                    writer.write(fp)
-                show_dialog("Success", f"New PDF created: {output_path}", QMessageBox.Information)
-        else:
-            with open(output_path, "wb") as fp:
-                writer.write(fp)
-            show_dialog("Success", f"New PDF created: {output_path}", QMessageBox.Information)
+                writer.add_page(reader.pages[page])                     # be rotated; or if page in in the list of the
+                writer.pages[page].rotate(rotation_degrees)             # ones to be rotated
+        save_output_file(writer, output_path)
     except Exception as e:
         show_dialog("Error", str(e), QMessageBox.Critical)
     finally:
@@ -98,10 +89,10 @@ def get_page_list_from_selected_pages(selected_pages: str):
             return selected_pages_list
         selected_pages = selected_pages.replace(" ", "")  # remove whitespaces
         if len(selected_pages) <= 0:
-            raise ValueError("Please enter some pages to rotate.")
+            raise ValueError("Please enter some pages.")
         chars = set('0123456789-,')
         if any((c not in chars) for c in selected_pages):  # check for invalid characters
-            raise ValueError("The selected pages are not valid.")
+            raise ValueError("Invalid character found. Valid characters: 0 1 2 3 4 5 6 7 8 9 - ,")
         page_ranges = selected_pages.split(",")
         for page_range in page_ranges:
             if "-" in page_range:  # current page range is a range
@@ -114,3 +105,19 @@ def get_page_list_from_selected_pages(selected_pages: str):
         return selected_pages_list
     except Exception as e:
         raise ValueError(f"The input for the selected pages is not valid.\n\n(Error: {e})")
+
+
+def save_output_file(pdf_writer: PdfWriter, output_path):
+    new_file = Path(output_path)
+    if new_file.is_file():
+        override_existing_file = show_dialog("Override file",
+                                             f"File {output_path} already exists. Do you want to override it?",
+                                             QMessageBox.Question, show_two_buttons=True)
+        if override_existing_file:
+            with open(output_path, "wb") as fp:
+                pdf_writer.write(fp)
+            show_dialog("Success", f"New PDF created: {output_path}", QMessageBox.Information)
+    else:
+        with open(output_path, "wb") as fp:
+            pdf_writer.write(fp)
+        show_dialog("Success", f"New PDF created: {output_path}", QMessageBox.Information)
