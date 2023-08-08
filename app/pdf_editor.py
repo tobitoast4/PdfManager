@@ -1,6 +1,5 @@
-import sys, os
-from PyQt5 import QtWidgets, uic, QtCore
-from PyQt5.QtWidgets import *
+import sys
+from PyQt5 import uic, QtCore
 
 from tab_merge import *
 from settings import SettingsWindow, change_window_style
