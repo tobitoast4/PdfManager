@@ -78,11 +78,9 @@ def split_pdf(input_path, output_path, selected_pages):
     try:
         reader = PdfReader(input_path)
         selected_pages_list = get_page_list_from_selected_pages(selected_pages)
-        print(selected_pages_list)
         for page in range(len(reader.pages)):
             if page in selected_pages_list:
                 writer.add_page(reader.pages[page])
-        print(writer.pages)
 
         save_output_file(writer, output_path)
     except Exception as e:
@@ -147,3 +145,9 @@ def save_output_file(pdf_writer: PdfWriter, output_path):
         with open(output_path, "wb") as fp:
             pdf_writer.write(fp)
         show_dialog("Success", f"New PDF created: {output_path}", QMessageBox.Information)
+
+
+def remove_quotes_from_path(path: str):
+    if (path[0] == '"' and path[-1] == '"') or (path[0] == "'" and path[-1] == "'"):
+        return path[1:-1]
+    return path

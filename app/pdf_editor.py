@@ -98,11 +98,11 @@ class MainWindow(QMainWindow):
         for row in self.merge_list_widget.elements_list:
             row_id = row["row_id"]
             line_edit = self.findChild(QLineEdit, f"line_edit_{row_id}")
-            line_edit_content = line_edit.text()
+            line_edit_content = remove_quotes_from_path(line_edit.text())
             pdf_list.append(line_edit_content)
 
         line_edit_output_path = self.findChild(QLineEdit, "merge_lineEdit_output")
-        output_path = line_edit_output_path.text()
+        output_path = remove_quotes_from_path(line_edit_output_path.text())
         merge_pdfs(pdf_list, output_path)
 
     def rotate_all_pages_changed(self):
@@ -115,21 +115,21 @@ class MainWindow(QMainWindow):
         line_edit_input_path = self.findChild(QLineEdit, "split_lineEdit_input")
         line_edit_output_path = self.findChild(QLineEdit, "split_lineEdit_output")
         line_edit_selected_pages = self.findChild(QLineEdit, "split_lineEdit_selected_pages")
-        split_input_path = line_edit_input_path.text()
-        split_output_path = line_edit_output_path.text()
+        split_input_path = remove_quotes_from_path(line_edit_input_path.text())
+        split_output_path = remove_quotes_from_path(line_edit_output_path.text())
         selected_pages = line_edit_selected_pages.text()
         split_pdf(split_input_path, split_output_path, selected_pages)
 
     def rotate_pdf(self):
         line_edit_input_path = self.findChild(QLineEdit, "rotate_lineEdit_input")
-        input_path = line_edit_input_path.text()
-        output_path = self.line_edit_output_path_rotate.text()
+        rotate_input_path = remove_quotes_from_path(line_edit_input_path.text())
+        rotate_output_path = remove_quotes_from_path(self.line_edit_output_path_rotate.text())
         rotation_degrees = self.rotate_comboBox_degrees.currentText()
         selected_pages = None
         if not self.checkBox_select_pages.isChecked():
             lineEdit_selected_pages = self.findChild(QLineEdit, "rotate_lineEdit_selected_pages")
             selected_pages = lineEdit_selected_pages.text()
-        rotate_pdf(input_path, output_path, rotation_degrees, selected_pages)
+        rotate_pdf(rotate_input_path, rotate_output_path, rotation_degrees, selected_pages)
 
     def show_settings(self):
             self.settings_wnd = SettingsWindow(app)
