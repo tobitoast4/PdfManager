@@ -47,6 +47,9 @@ def show_dialog(title, description, type, show_two_buttons=False):
 
 
 def merge_pdfs(pdf_list, output_path):
+    if output_path == "":
+        show_dialog("Error", "Output path should not be empty.", QMessageBox.Critical)
+        return
     if len(pdf_list) <= 1:
         show_dialog("Error", "Please specify at least two documents to merge.", QMessageBox.Critical)
         return
@@ -55,6 +58,9 @@ def merge_pdfs(pdf_list, output_path):
 
     try:
         for pdf in pdf_list:
+            if pdf == "":
+                show_dialog("Error", "No input path should be empty.", QMessageBox.Critical)
+                return
             merger.append(pdf)
 
         new_file = Path(output_path)
@@ -75,6 +81,12 @@ def merge_pdfs(pdf_list, output_path):
 
 
 def split_pdf(input_path, output_path, selected_pages):
+    if input_path == "":
+        show_dialog("Error", "Input path should not be empty.", QMessageBox.Critical)
+        return
+    if output_path == "":
+        show_dialog("Error", "Output path should not be empty.", QMessageBox.Critical)
+        return
     writer = PdfWriter()
     try:
         reader = PdfReader(input_path)
@@ -89,6 +101,12 @@ def split_pdf(input_path, output_path, selected_pages):
 
 
 def rotate_pdf(input_path, output_path, rotation_degrees, selected_pages):
+    if input_path == "":
+        show_dialog("Error", "Input path should not be empty.", QMessageBox.Critical)
+        return
+    if output_path == "":
+        show_dialog("Error", "Output path should not be empty.", QMessageBox.Critical)
+        return
     writer = PdfWriter()
     try:
         reader = PdfReader(input_path)
@@ -149,6 +167,8 @@ def save_output_file(pdf_writer: PdfWriter, output_path):
 
 
 def remove_quotes_from_path(path: str):
+    if path is None or path == "":
+        return ""
     if (path[0] == '"' and path[-1] == '"') or (path[0] == "'" and path[-1] == "'"):
         return path[1:-1]
     return path
