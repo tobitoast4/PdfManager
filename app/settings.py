@@ -16,7 +16,7 @@ class SettingsWindow(QMainWindow):
     def __init__(self, app):
         super().__init__()
         self.app = app
-        uic.loadUi('settings_window.ui', self)  # Load the .ui file
+        uic.loadUi('res/settings_window.ui', self)  # Load the .ui file
         window_style = self.findChild(QComboBox, "comboBox_window_style")
 
         settings = read_settings()

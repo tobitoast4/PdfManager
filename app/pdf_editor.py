@@ -11,7 +11,7 @@ app = QApplication(sys.argv)
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main_window.ui', self)  # Load the .ui file
+        uic.loadUi('res/main_window.ui', self)  # Load the .ui file
 
         self.layout = self.findChild(QVBoxLayout, "verticalLayout_main")
         self.scroll = QScrollArea()

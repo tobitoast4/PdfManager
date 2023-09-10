@@ -5,15 +5,16 @@ import json
 
 WINDOW_STYLE_KEY = "window_style"
 
+
 def write_settings(json_data):
     json_object = json.dumps(json_data, indent=4)
-    with open("settings.json", "w") as outfile:
+    with open("res/settings.json", "w") as outfile:
         outfile.write(json_object)
 
 
 def read_settings():
     try:
-        with open('settings.json', 'r') as openfile:
+        with open('res/settings.json', 'r') as openfile:
             return json.load(openfile)
     except FileNotFoundError:
         return None

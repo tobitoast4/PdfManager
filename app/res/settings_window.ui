@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>247</width>
-    <height>145</height>
+    <width>403</width>
+    <height>388</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>403</width>
+    <height>388</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Settings</string>
@@ -51,11 +57,18 @@
           </sizepolicy>
          </property>
          <property name="text">
+          <string>How to use</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
           <string>Window style</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="2" column="1">
         <widget class="QComboBox" name="comboBox_window_style">
          <item>
           <property name="text">
@@ -74,7 +87,7 @@
          </item>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="3" column="0">
         <widget class="QLabel" name="label_3">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -83,11 +96,11 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Help</string>
+          <string>Code</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="3" column="1">
         <widget class="QLabel" name="label_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -96,9 +109,49 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Stackoverflow&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/tobitoast4/PdfManager&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="openExternalLinks">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_5">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>This application provides some basic functionalities for PDF editing. 
+
+It allows to merge multiple PDFs into one, rotate pages of a PDF or split one.
+</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Tips</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="label_7">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>When using this app on Microsoft Windows, select a PDF you want to edit, press 'Shift' + 'Mouse Right' and then click 'Copy as path' to get the path of the file. After, you can paste the path into one of the input / output fields. 
+
+Paths with leading and ending &quot; or ' can also be entered. These characters will be ignored if they are in first or last position. 
+
+</string>
+         </property>
+         <property name="wordWrap">
           <bool>true</bool>
          </property>
         </widget>
